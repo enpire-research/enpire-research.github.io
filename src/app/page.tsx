@@ -1410,7 +1410,7 @@ function ScrollFleetTeaser() {
 }
 
 export default function Home() {
-  const [theme, setTheme] = useState<ThemeMode>("night");
+  const [theme, setTheme] = useState<ThemeMode>("day");
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
