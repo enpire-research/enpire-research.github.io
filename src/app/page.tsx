@@ -137,7 +137,7 @@ const article: ArticleBlock[] = [
   { type: "ziptie-reset-case" },
   {
     type: "paragraph",
-    text: "Verification turns a raw rollout into a reward the agent can optimize. The synchronized panels below trace that pipeline for Tie Zip-tie, with the top and right cameras stacked in each step: a detector draws bounding boxes around the zip-tie head and strap, a segmentation model resolves the same parts into masks over the raw view, and the reward panel reads each camera's pass/no-pass verdict and fuses them into the final binary reward.",
+    text: "We use autoresearch derived reward function to automatically score the outcome of ziptie insertion: a detector draws bounding boxes around the zip-tie head and strap, a segmentation model resolves the same parts into masks over the raw view, and we decide from each camera view whether the ziptie strap passes through the ziptie head above a fixed length threshold, and combine their verdict to final binary reward.",
   },
   { type: "ziptie-reward" },
   { type: "subhead", text: "Case 4: GPU Insertion" },
