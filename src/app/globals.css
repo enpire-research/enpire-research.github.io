@@ -1177,6 +1177,215 @@ textarea {
   white-space: nowrap;
 }
 
+/* Case 3 reward-verification pipeline panel */
+.ziptie-reward {
+  width: min(925px, 100%);
+  margin: 18px auto 44px;
+}
+
+.ziptie-reward__stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+.ziptie-reward__stage {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 10px;
+  margin: 0;
+  min-width: 0;
+}
+
+.ziptie-reward__stage-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #000;
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__stage-frame {
+  border-color: rgba(12, 12, 12, 0.18);
+}
+
+.ziptie-reward__stage-frame video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 640 / 816;
+  background: #000;
+  object-fit: cover;
+}
+
+.ziptie-reward__stage-frame .video-panel-expand-button {
+  inset: auto 12px 12px auto;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+}
+
+/* Reward verdict columns are synced data panels, not videos. */
+/* Per-camera decisions: split 50/50 to mirror the stacked top/right video rows. */
+.ziptie-reward__decisions-stage .ziptie-reward__decisions,
+.ziptie-reward__final-stage .ziptie-reward__final {
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 640 / 816;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #000;
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__decisions-stage .ziptie-reward__decisions,
+.figure-page[data-theme="day"] .ziptie-reward__final-stage .ziptie-reward__final {
+  border-color: rgba(12, 12, 12, 0.18);
+  background: #0c0c0c;
+}
+
+.ziptie-reward__decision {
+  display: flex;
+  flex: 1 1 50%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  text-align: center;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+/* The divider sits exactly on the seam between the two video rows. */
+.ziptie-reward__decision + .ziptie-reward__decision {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__decision + .ziptie-reward__decision {
+  border-top-color: rgba(12, 12, 12, 0.18);
+}
+
+.ziptie-reward__decision-cam {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.ziptie-reward__decision-state {
+  font-size: clamp(16px, 2.2vw, 24px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #ff5a52;
+}
+
+.ziptie-reward__decision[data-pass="true"] {
+  background: rgba(74, 222, 91, 0.1);
+}
+
+.ziptie-reward__decision[data-pass="true"] .ziptie-reward__decision-state {
+  color: #4ade5b;
+}
+
+.ziptie-reward__decision[data-pass="false"] {
+  background: rgba(255, 90, 82, 0.08);
+}
+
+/* Final reward: one bold red/green verdict in its own column. */
+.ziptie-reward__final {
+  align-items: center;
+  justify-content: center;
+  padding: 16px 10px;
+}
+
+.ziptie-reward__final-value {
+  font-size: clamp(20px, 2.6vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: #ff5a52;
+}
+
+.ziptie-reward__final[data-pass="true"] {
+  background: rgba(74, 222, 91, 0.12);
+}
+
+.ziptie-reward__final[data-pass="true"] .ziptie-reward__final-value {
+  color: #4ade5b;
+}
+
+.ziptie-reward__final[data-pass="false"] {
+  background: rgba(255, 90, 82, 0.1);
+}
+
+.ziptie-reward__stage-caption {
+  display: grid;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 1.3;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ziptie-reward__stage-caption strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__stage-caption {
+  color: rgba(12, 12, 12, 0.66);
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__stage-caption strong {
+  color: var(--figure-black);
+}
+
+.ziptie-reward__controls {
+  margin-top: 16px;
+}
+
+.ziptie-reward__transport {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ziptie-reward__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.ziptie-reward__step:hover,
+.ziptie-reward__step:focus-visible {
+  border-color: #797af2;
+  outline: none;
+}
+
+.figure-page[data-theme="day"] .ziptie-reward__step {
+  border-color: rgba(12, 12, 12, 0.22);
+}
+
+.ziptie-reward__speed {
+  position: static;
+  height: 30px;
+}
+
+.ziptie-reward__readout {
+  min-width: 84px;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .ziptie-reward__stages {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .reset-placeholder-panel {
   width: min(925px, 100%);
   margin: 18px auto 44px;

@@ -11,6 +11,7 @@ import { AgentResourceUtilization } from "@/components/AgentResourceUtilization"
 import PushTPolicyPanel from "@/components/PushTPolicyPanel";
 import PushTResetCasePanel from "@/components/PushTResetCasePanel";
 import { ResetVideoCasePanel } from "@/components/ResetVideoCasePanel";
+import { ZiptieRewardPanel } from "@/components/ZiptieRewardPanel";
 
 type ArticleBlock =
   | { type: "heading"; text: string }
@@ -23,6 +24,7 @@ type ArticleBlock =
   | { type: "pusht-reset-case" }
   | { type: "pin-reset-case" }
   | { type: "ziptie-reset-case" }
+  | { type: "ziptie-reward" }
   | { type: "gpu-reset-case" }
   | { type: "reset-placeholder"; title: string }
   | { type: "claim-grid" }
@@ -133,6 +135,11 @@ const article: ArticleBlock[] = [
   { type: "pin-reset-case" },
   { type: "subhead", text: "Case 3: Tie Zip-tie" },
   { type: "ziptie-reset-case" },
+  {
+    type: "paragraph",
+    text: "Verification turns a raw rollout into a reward the agent can optimize. The synchronized panels below trace that pipeline for Tie Zip-tie, with the top and right cameras stacked in each step: a detector draws bounding boxes around the zip-tie head and strap, a segmentation model resolves the same parts into masks over the raw view, and the reward panel reads each camera's pass/no-pass verdict and fuses them into the final binary reward.",
+  },
+  { type: "ziptie-reward" },
   { type: "subhead", text: "Case 4: GPU Insertion" },
   { type: "gpu-reset-case" },
   {
@@ -1233,6 +1240,10 @@ function ArticleContent() {
 
           if (block.type === "ziptie-reset-case") {
             return <ZiptieResetCasePanel key={index} />;
+          }
+
+          if (block.type === "ziptie-reward") {
+            return <ZiptieRewardPanel key={index} />;
           }
 
           if (block.type === "gpu-reset-case") {
