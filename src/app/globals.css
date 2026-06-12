@@ -2040,6 +2040,430 @@ textarea {
   color: rgba(255, 255, 255, 0.92);
 }
 
+.idea-tree-native {
+  --paper: rgba(255, 255, 255, 0.035);
+  --paper-soft: rgba(255, 255, 255, 0.055);
+  --ink: rgba(255, 255, 255, 0.92);
+  --ink-soft: rgba(255, 255, 255, 0.68);
+  --muted: rgba(255, 255, 255, 0.48);
+  --hairline: rgba(255, 255, 255, 0.12);
+  --hairline-strong: rgba(255, 255, 255, 0.24);
+  --s1: #797af2;
+  --s1-soft: rgba(121, 122, 242, 0.16);
+  --s1-ink: rgba(255, 255, 255, 0.9);
+  --s2: rgba(255, 255, 255, 0.78);
+  --s3: #76d19a;
+  --s3-soft: rgba(118, 209, 154, 0.16);
+  --ff-body: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --ff-display: var(--font-source-serif), Georgia, serif;
+  --ff-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --hair: 1px;
+  --radius-box: 4px;
+  --radius-pill: 999px;
+  width: 100%;
+  margin: 56px 0 8px;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--ff-body);
+}
+
+.idea-tree-native .figure-frame {
+  position: relative;
+  width: 100%;
+  background: transparent;
+}
+
+.idea-tree-native .idea-tree-caption {
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--ff-body);
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .idea-tree-caption {
+  color: rgba(12, 12, 12, 0.72);
+}
+
+.idea-tree-native,
+.idea-tree-native * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.idea-tree-native .schematic {
+  position: relative;
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 1200 / 1016;
+  margin: 0 auto;
+}
+
+/* The system diagram's unscoped `.schematic::before` (figure-one.css) draws an
+   animated growing box; it leaks onto this reused `.schematic` class. The
+   `animation: none` guard above can't reach pseudo-elements, so drop it here. */
+.idea-tree-native .schematic::before,
+.idea-tree-native .schematic::after {
+  content: none;
+  animation: none;
+}
+
+.idea-tree-native .trace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.idea-tree-native .grid {
+  stroke: var(--hairline);
+  stroke-width: 1.4;
+  stroke-dasharray: 3 5;
+}
+
+.idea-tree-native .axis {
+  stroke: var(--hairline-strong);
+  stroke-width: 1.4;
+}
+
+.idea-tree-native .axis-num {
+  font-family: var(--ff-mono);
+  font-size: 14px;
+  fill: var(--muted);
+}
+
+.idea-tree-native .axis-cap {
+  font-family: var(--ff-body);
+  font-size: 16px;
+  font-style: italic;
+  fill: var(--muted);
+}
+
+.idea-tree-native .node-dot {
+  fill: rgba(12, 12, 12, 0.8);
+  stroke: var(--s2);
+  stroke-width: 2;
+}
+
+.idea-tree-native .node-halo {
+  fill: rgba(12, 12, 12, 0.9);
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.1;
+}
+
+.idea-tree-native .idea-dot {
+  fill: var(--ink);
+  stroke: rgba(12, 12, 12, 0.82);
+  stroke-width: 1.7;
+}
+
+.idea-tree-native .node-raised-ring {
+  fill: none;
+  stroke: var(--s3);
+  stroke-width: 1.7;
+  stroke-opacity: 0.9;
+}
+
+.idea-tree-native .node-key {
+  fill: var(--s3);
+  stroke: rgba(12, 12, 12, 0.82);
+  stroke-width: 1.7;
+}
+
+.idea-tree-native .step-dot {
+  fill: var(--s3);
+  fill-opacity: 0.85;
+}
+
+.idea-tree-native .hill-area {
+  stroke: none;
+}
+
+.idea-tree-native .hill-line {
+  fill: none;
+  stroke: var(--s3);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.idea-tree-native .hc-leader {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  stroke-opacity: 0.5;
+}
+
+.idea-tree-native .hc-key-ring {
+  fill: none;
+  stroke: var(--s3);
+  stroke-width: 1.9;
+  stroke-opacity: 0.6;
+}
+
+.idea-tree-native .hc-key {
+  fill: var(--s3);
+  stroke: rgba(12, 12, 12, 0.82);
+  stroke-width: 1.9;
+}
+
+.idea-tree-native .hc-name {
+  font-family: var(--ff-body);
+  font-size: 14px;
+  fill: var(--ink);
+}
+
+.idea-tree-native .hc-delta {
+  font-family: var(--ff-mono);
+  font-size: 13.5px;
+  font-weight: 600;
+  fill: oklch(42% 0.1 150);
+}
+
+.idea-tree-native .tree-trunk {
+  stroke: var(--ink);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+
+.idea-tree-native .tree-stem {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.idea-tree-native .tree-merge {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1.6;
+}
+
+.idea-tree-native .merge-dot {
+  fill: var(--hairline-strong);
+  stroke: var(--ink);
+  stroke-width: 0.6;
+}
+
+.idea-tree-native .insp-edge {
+  fill: none;
+  stroke: var(--s3);
+  stroke-width: 1.2;
+  opacity: 0.16;
+}
+
+.idea-tree-native .insp-edge.key {
+  stroke-width: 2.6;
+  opacity: 1;
+}
+
+.idea-tree-native .insp-edge.dim {
+  opacity: 0.04;
+}
+
+.idea-tree-native .tree-hid {
+  font-family: var(--ff-mono);
+  font-size: 12px;
+  fill: var(--muted);
+  pointer-events: none;
+}
+
+.idea-tree-native .legend-txt {
+  font-family: var(--ff-body);
+  font-size: 15px;
+  fill: var(--ink-soft);
+}
+
+.idea-tree-native .tree-conn {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  stroke-opacity: 0.42;
+}
+
+.idea-tree-native .node-hit {
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.idea-tree-native .hit-area {
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
+}
+
+.idea-tree-native .node-dot,
+.idea-tree-native .node-halo,
+.idea-tree-native .idea-dot,
+.idea-tree-native .node-raised-ring,
+.idea-tree-native .node-key,
+.idea-tree-native .hc-key,
+.idea-tree-native .hc-key-ring,
+.idea-tree-native .sel-ring {
+  pointer-events: all;
+}
+
+.idea-tree-native .node-hit:hover .node-dot {
+  stroke-width: 3.2;
+}
+
+.idea-tree-native .node-hit:hover .idea-dot {
+  stroke-width: 2.8;
+}
+
+.idea-tree-native .node-hit:hover .node-key,
+.idea-tree-native .node-hit:hover .hc-key {
+  stroke-width: 3;
+}
+
+.idea-tree-native .sel-ring {
+  fill: none;
+  stroke: var(--s1);
+  stroke-width: 2.2;
+}
+
+.idea-tree-native .idea-popover {
+  position: absolute;
+  z-index: 3;
+  width: min(430px, calc(100% - 56px));
+  padding: 14px 42px 16px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-box);
+  background: rgba(16, 16, 16, 0.94);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+  color: var(--ink);
+  font-family: var(--ff-body);
+  backdrop-filter: blur(18px);
+  transform: translate(16px, -18px);
+}
+
+.idea-tree-native .idea-popover--left {
+  transform: translate(calc(-100% - 16px), -18px);
+}
+
+.idea-tree-native .idea-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  padding: 2px 6px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.idea-tree-native .idea-close:hover {
+  color: var(--ink);
+}
+
+.idea-tree-native .idea-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.idea-tree-native .idea-tag {
+  padding: 1px 7px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0c0c0c;
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.idea-tree-native .idea-title {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.idea-tree-native .idea-core {
+  margin: 8px 0 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* the pp this score-raising idea added to the team-avg best success rate */
+.idea-tree-native .idea-inc {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.idea-tree-native .idea-inc-val {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: oklch(68% 0.09 150 / 0.22);
+  color: oklch(82% 0.12 150);
+  font-family: var(--ff-mono);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .idea-inc-val {
+  background: oklch(68% 0.09 150 / 0.2);
+  color: oklch(42% 0.12 150);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native {
+  --paper: rgba(12, 12, 12, 0.035);
+  --paper-soft: rgba(12, 12, 12, 0.055);
+  --ink: rgba(12, 12, 12, 0.9);
+  --ink-soft: rgba(12, 12, 12, 0.68);
+  --muted: rgba(12, 12, 12, 0.48);
+  --hairline: rgba(12, 12, 12, 0.12);
+  --hairline-strong: rgba(12, 12, 12, 0.24);
+  --s2: rgba(12, 12, 12, 0.72);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .node-dot {
+  fill: rgba(246, 246, 239, 0.86);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .idea-dot {
+  fill: var(--ink);
+  stroke: rgba(246, 246, 239, 0.9);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .node-halo {
+  fill: rgba(246, 246, 239, 0.92);
+  stroke: rgba(12, 12, 12, 0.42);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .node-key,
+.figure-page[data-theme="day"] .idea-tree-native .hc-key {
+  stroke: rgba(246, 246, 239, 0.9);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .idea-popover {
+  border-color: rgba(12, 12, 12, 0.18);
+  background: rgba(246, 246, 239, 0.94);
+  box-shadow: 0 18px 42px rgba(12, 12, 12, 0.12);
+}
+
+.figure-page[data-theme="day"] .idea-tree-native .idea-tag {
+  background: rgba(12, 12, 12, 0.9);
+  color: var(--figure-cream);
+}
+
 .learned-policy-panel__surface video,
 .learned-policy-panel__surface img {
   position: absolute;
@@ -3832,6 +4256,13 @@ textarea {
 
   .learned-policy-panel__surface {
     min-height: 136px;
+  }
+
+  .idea-tree-native {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    transform: none;
   }
 
   .robocasa-gallery__videos {

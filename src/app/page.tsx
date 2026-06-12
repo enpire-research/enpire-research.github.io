@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import AutoEnvBenchChart, { AutoEnvBenchScalingChart } from "@/components/AutoEnvBenchChart";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
 import EnpireFigureOne from "@/components/EnpireFigureOne";
+import IdeaTreeNative from "@/components/IdeaTreeNative";
 import { AgentResourceUtilization } from "@/components/AgentResourceUtilization";
 import PushTPolicyPanel from "@/components/PushTPolicyPanel";
 import PushTResetCasePanel from "@/components/PushTResetCasePanel";
@@ -27,6 +28,7 @@ type ArticleBlock =
   | { type: "reset-placeholder"; title: string }
   | { type: "claim-grid" }
   | { type: "learned-policy-panels" }
+  | { type: "idea-tree-embed" }
   | { type: "system-intro"; text: string }
   | { type: "system-diagram" }
   | { type: "autoenv-chart" }
@@ -113,6 +115,7 @@ const article: ArticleBlock[] = [
   },
   { type: "heading", text: "Learned Manipulation Policy" },
   { type: "learned-policy-panels" },
+  { type: "idea-tree-embed" },
   { type: "heading", text: "ENPIRE System" },
   {
     type: "system-intro",
@@ -841,6 +844,10 @@ function LearnedPolicyPanels() {
   );
 }
 
+function IdeaTreeEmbed() {
+  return <IdeaTreeNative />;
+}
+
 function ModuleGrid() {
   const modules = [
     {
@@ -1209,6 +1216,10 @@ function ArticleContent() {
 
           if (block.type === "learned-policy-panels") {
             return <LearnedPolicyPanels key={index} />;
+          }
+
+          if (block.type === "idea-tree-embed") {
+            return <IdeaTreeEmbed key={index} />;
           }
 
           if (block.type === "system-intro") {
