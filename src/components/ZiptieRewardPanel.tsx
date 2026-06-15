@@ -292,6 +292,7 @@ export function ZiptieRewardPanel() {
             onClick={() => setIsCodeOpen((open) => !open)}
             type="button"
           >
+            <span className="ziptie-reward__code-toggle-label">View Code</span>
             <Code2 size={15} strokeWidth={1.8} />
           </button>
         </div>

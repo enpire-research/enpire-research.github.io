@@ -837,6 +837,20 @@ textarea {
   box-shadow: none;
 }
 
+/* "View Code" label variant: widen the icon button to hold text. */
+.ziptie-reward__code-toggle {
+  width: auto;
+  height: 28px;
+  gap: 6px;
+  padding: 0 10px;
+}
+
+.ziptie-reward__code-toggle-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
 .pusht-run:hover,
 .pusht-icon:hover,
 .pusht-code-toggle:hover {

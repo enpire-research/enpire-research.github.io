@@ -241,10 +241,10 @@ const article: ArticleBlock[] = [
     type: "paragraph",
     text: "Coding agents do not fully utilize robot resources when they are reading logs, writing code, debugging, or waiting for the language-model backbone. As the number of robots scales, MRU decreases while GPU active utilization increases. Compared to a single-robot setup, agent teams spend more time summarizing peer branches and less time operating the robot, and coding agents may fail to launch enough parallel training sessions to exhaust GPU resources.",
   },
-  { type: "subhead", text: "Token cost grows super-linearly with fleet size" },
+  { type: "subhead", text: "Scaling robot fleet causes higher token consumption" },
   {
     type: "paragraph",
-    text: "As fleet size increases, token usage grows faster than the ideal linear trend. MTU remains close to the linear projection up to four agents, but rises sharply at eight agents. The total token budget required to obtain a successful policy follows the same pattern, increasing much more rapidly than the corresponding reduction in wall-clock time. Larger fleets can reach success sooner, but require a disproportionately higher token budget.",
+    text: "Scaling the robot fleet drives higher token consumption: as more agents read logs, summarize peer branches, and coordinate, the total token budget required to reach a successful policy grows with fleet size. Larger fleets can reach success sooner, but the additional speedup comes at the cost of higher token consumption.",
   },
   { type: "heading", text: "Acknowledgements" },
   {
