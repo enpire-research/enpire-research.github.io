@@ -5,6 +5,8 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
+import ResetSwipeCarousel from "@/components/ResetSwipeCarousel";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 const initialStates = [
   {
@@ -55,6 +57,7 @@ export default function PushTResetCasePanel() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const selectedState = initialStates.find((state) => state.id === selectedId) ?? initialStates[0];
   const speed = playbackSpeeds[speedIndex];
+  const isMobile = useIsMobile();
   const resetKeypoints = selectedState.id === "init-1" ? keypoints : [];
   const activeKeypoint =
     resetKeypoints.find((point) => point.id === selectedKeypointId) ??
@@ -141,6 +144,10 @@ export default function PushTResetCasePanel() {
     setViewerInitialTime(videoRef.current?.currentTime ?? 0);
     setIsViewerOpen(true);
   };
+
+  if (isMobile) {
+    return <ResetSwipeCarousel ariaLabel="Case 1 Push T auto reset" initialStates={initialStates} />;
+  }
 
   return (
     <section className="pusht-reset-case" aria-label="Case 1 Push T auto reset">

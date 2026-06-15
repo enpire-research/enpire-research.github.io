@@ -1615,42 +1615,39 @@ textarea {
 }
 
 @media (max-width: 820px) {
-  /* Mobile: the 4-column composition (videos -> per-camera verdict -> AND ->
-     reward) doesn't survive a grid collapse, so make it a horizontal swipe
-     strip that preserves the left-to-right story, one panel per screen. */
+  /* Mobile: keep the full multi-column composition, just scaled down to fit the
+     width (flexible 1fr columns shrink; tighten gaps and label fonts a touch). */
   .ziptie-reward__stages {
-    display: flex;
-    grid-template-columns: none;
-    grid-template-rows: none;
-    flex-wrap: nowrap;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    gap: 6px 6px;
   }
 
-  .ziptie-reward__stages::-webkit-scrollbar {
-    display: none;
+  .ziptie-reward__decision-cam {
+    font-size: 9px;
+    letter-spacing: 0.04em;
   }
 
-  .ziptie-reward__row-labels {
-    display: none;
+  .ziptie-reward__decision-state {
+    font-size: clamp(11px, 3.4vw, 16px);
   }
 
-  .ziptie-reward__stage {
-    display: grid;
-    grid-template-rows: auto auto;
-    gap: 10px;
-    margin: 0;
-    flex: 0 0 78%;
-    min-width: 0;
-    scroll-snap-align: center;
+  .ziptie-reward__final-value {
+    font-size: clamp(10px, 2.6vw, 13px);
   }
 
-  .ziptie-reward__stages .ziptie-reward__stage > * {
-    grid-row: auto;
-    grid-column: auto;
+  /* The horizontal AND-connector eats the narrow final column; shrink it and
+     drop its padding so REWARD fits without clipping. */
+  .ziptie-reward__final-stage .ziptie-reward__final {
+    gap: 1px;
+    padding: 0;
+  }
+
+  .ziptie-reward__final-connector {
+    width: 20px;
+  }
+
+  .ziptie-reward__row-labels span {
+    font-size: 9px;
+    letter-spacing: 0.08em;
   }
 }
 
@@ -2417,6 +2414,11 @@ textarea {
 .article-title-block .article-authors__names {
   color: rgba(255, 255, 255, 0.86);
   font-size: 18px;
+}
+
+/* Keep each author's name + marks together so names never split across lines. */
+.article-author {
+  white-space: nowrap;
 }
 
 .article-author-link {
@@ -4788,6 +4790,88 @@ textarea {
   align-items: center;
 }
 
+/* Mobile reset carousel: swipe between init videos, the centered one plays. */
+.reset-carousel {
+  width: 100%;
+  margin: 18px 0 8px;
+}
+
+.reset-carousel__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.reset-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.reset-carousel__card {
+  position: relative;
+  flex: 0 0 88%;
+  margin: 0;
+  scroll-snap-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+
+.figure-page[data-theme="day"] .reset-carousel__card {
+  border-color: rgba(12, 12, 12, 0.16);
+}
+
+.reset-carousel__card video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.reset-carousel__label {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+
+.reset-carousel__dots {
+  display: flex;
+  gap: 7px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.reset-carousel__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.reset-carousel__dot[data-active="true"] {
+  background: var(--accent, #76d19a);
+  transform: scale(1.25);
+}
+
+.figure-page[data-theme="day"] .reset-carousel__dot {
+  background: rgba(12, 12, 12, 0.2);
+}
+
+.figure-page[data-theme="day"] .reset-carousel__dot[data-active="true"] {
+  background: #15803d;
+}
+
 /* Mobile table-of-contents drawer (desktop hides it; ≤820px shows the trigger). */
 .mobile-outline {
   display: none;
@@ -4932,6 +5016,12 @@ textarea {
 }
 
 @media (max-width: 820px) {
+  /* The desktop author line-breaks orphan fragments on a narrow screen; let the
+     list flow and wrap naturally instead. */
+  .article-author-break {
+    display: none;
+  }
+
   .mobile-outline {
     display: block;
   }

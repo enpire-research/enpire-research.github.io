@@ -5,6 +5,8 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
+import ResetSwipeCarousel from "@/components/ResetSwipeCarousel";
+import { useIsMobile } from "@/lib/useIsMobile";
 
 type ResetInit = {
   id: string;
@@ -34,6 +36,7 @@ export function ResetVideoCasePanel({
   const selectedState = initialStates.find((state) => state.id === selectedId) ?? initialStates[0];
   const speed = playbackSpeeds[speedIndex];
   const percent = Math.round(progress * 100);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (videoRef.current) {
@@ -86,6 +89,10 @@ export function ResetVideoCasePanel({
   };
 
   if (!selectedState) return null;
+
+  if (isMobile) {
+    return <ResetSwipeCarousel ariaLabel={ariaLabel} initialStates={initialStates} />;
+  }
 
   return (
     <section className="pusht-reset-case" aria-label={ariaLabel}>

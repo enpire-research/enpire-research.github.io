@@ -1307,15 +1307,17 @@ function ArticleContent() {
               <p className="article-authors__names">
                 {titleAuthors.map((author, index) => (
                   <span key={author.name}>
-                    {"breakBefore" in author ? <br /> : null}
-                    {"href" in author && author.href ? (
-                      <a className="article-author-link" href={author.href} rel="noopener noreferrer" target="_blank">
-                        {author.name}
-                      </a>
-                    ) : (
-                      author.name
-                    )}
-                    <sup>{author.marks}</sup>
+                    {"breakBefore" in author ? <br className="article-author-break" /> : null}
+                    <span className="article-author">
+                      {"href" in author && author.href ? (
+                        <a className="article-author-link" href={author.href} rel="noopener noreferrer" target="_blank">
+                          {author.name}
+                        </a>
+                      ) : (
+                        author.name
+                      )}
+                      <sup>{author.marks}</sup>
+                    </span>
                     {index < titleAuthors.length - 1 ? ", " : ""}
                   </span>
                 ))}
