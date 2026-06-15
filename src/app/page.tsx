@@ -15,6 +15,8 @@ import PushTResetCasePanel from "@/components/PushTResetCasePanel";
 import { ResetVideoCasePanel } from "@/components/ResetVideoCasePanel";
 import { ZiptieRewardPanel } from "@/components/ZiptieRewardPanel";
 import PasscodeGate from "@/components/PasscodeGate";
+import { ziptieResetCode, ziptieResetCodeFile } from "@/data/ziptieResetCode";
+import { gpuResetCode, gpuResetCodeFile } from "@/data/gpuResetCode";
 
 type ArticleBlock =
   | { type: "heading"; text: string }
@@ -667,6 +669,12 @@ function ZiptieResetCasePanel() {
   return (
     <ResetVideoCasePanel
       ariaLabel="Case 3 Tie Zip-tie auto reset"
+      code={{
+        file: ziptieResetCodeFile,
+        code: ziptieResetCode,
+        title: "Zip-tie auto-reset script",
+        subtitle: "Case 3: Tie Zip-tie · vision-guided tail grasp",
+      }}
       initialStates={[
         {
           id: "ziptie-init-1",
@@ -709,6 +717,12 @@ function GpuResetCasePanel() {
       </aside>
       <ResetVideoCasePanel
         ariaLabel="Case 4 GPU Insertion auto reset"
+        code={{
+          file: gpuResetCodeFile,
+          code: gpuResetCode,
+          title: "GPU auto-reset script",
+          subtitle: "Case 4: GPU Insertion · single-arm unplug",
+        }}
         initialStates={[
           {
             id: "gpu-init-1",

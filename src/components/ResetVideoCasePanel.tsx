@@ -1,11 +1,12 @@
 "use client";
 
-import { Maximize2 } from "lucide-react";
+import { Code2, Maximize2, X } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
 import ResetSwipeCarousel from "@/components/ResetSwipeCarousel";
+import { highlightPythonLine } from "@/lib/pythonHighlight";
 import { useIsMobile } from "@/lib/useIsMobile";
 
 type ResetInit = {
@@ -15,15 +16,25 @@ type ResetInit = {
   video: string;
 };
 
+// Optional "View Code" toggle: the reset script that drives this case.
+type ResetCode = {
+  file: string;
+  code: string;
+  title: string;
+  subtitle: string;
+};
+
 const progressMilestones = [0.2, 0.4, 0.6, 0.8];
 const playbackSpeeds = [2, 4, 8, 1] as const;
 
 export function ResetVideoCasePanel({
   ariaLabel,
   initialStates,
+  code,
 }: {
   ariaLabel: string;
   initialStates: ResetInit[];
+  code?: ResetCode;
 }) {
   const [selectedId, setSelectedId] = useState(initialStates[0]?.id ?? "");
   const [duration, setDuration] = useState(0);
@@ -32,6 +43,8 @@ export function ResetVideoCasePanel({
   const [speedIndex, setSpeedIndex] = useState(0);
   const [viewerInitialTime, setViewerInitialTime] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isCodeOpen, setIsCodeOpen] = useState(false);
+  const codeLines = code ? code.code.split("\n") : [];
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const selectedState = initialStates.find((state) => state.id === selectedId) ?? initialStates[0];
   const speed = playbackSpeeds[speedIndex];
@@ -165,6 +178,19 @@ export function ResetVideoCasePanel({
           />
         </div>
         <span className="pusht-reset-case__percent">{percent}%</span>
+        {code ? (
+          <button
+            aria-label="View the reset script code"
+            aria-pressed={isCodeOpen}
+            className="pusht-code-toggle ziptie-reward__code-toggle"
+            data-open={isCodeOpen}
+            onClick={() => setIsCodeOpen((open) => !open)}
+            type="button"
+          >
+            <span className="ziptie-reward__code-toggle-label">View Code</span>
+            <Code2 size={15} strokeWidth={1.8} />
+          </button>
+        ) : null}
       </div>
       <div className="pusht-reset-case__gallery" aria-label={`${ariaLabel} initial positions`}>
         {initialStates.map((state) => (
@@ -192,6 +218,40 @@ export function ResetVideoCasePanel({
         src={selectedState.video}
         title={`${ariaLabel}: ${selectedState.label}`}
       />
+      {code && isCodeOpen ? (
+        <div className="pusht-code-float" role="dialog" aria-label={`${code.title} source`}>
+          <div className="pusht-code-window">
+            <div className="pusht-code-titlebar">
+              <div className="pusht-code-tab">
+                <Code2 size={13} strokeWidth={1.8} />
+                <span>{code.file}</span>
+              </div>
+              <button
+                aria-label="Close reset code"
+                className="pusht-icon pusht-icon--compact"
+                onClick={() => setIsCodeOpen(false)}
+                type="button"
+              >
+                <X size={15} strokeWidth={1.8} />
+              </button>
+            </div>
+            <div className="pusht-code-meta">
+              <strong>{code.title}</strong>
+              <span>{code.subtitle}</span>
+            </div>
+            <div className="pusht-code-block">
+              <code>
+                {codeLines.map((line, lineIndex) => (
+                  <span className="pusht-code-line" key={`reset-code-${lineIndex}`}>
+                    <span className="pusht-code-line-number">{lineIndex + 1}</span>
+                    <span className="pusht-code-line-text">{highlightPythonLine(line)}</span>
+                  </span>
+                ))}
+              </code>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
