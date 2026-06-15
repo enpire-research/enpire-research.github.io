@@ -115,7 +115,7 @@ const subheadIds: Record<string, string> = {
 
 const titleAuthors = [
   { name: "Wenli Xiao", marks: "1,2†", href: "https://wenlixiao.com/" },
-  { name: "Jia Xie", marks: "2†", href: "https://github.com/jia-xie" },
+  { name: "Jia Xie", marks: "2†", href: "https://jia-xie.com" },
   { name: "Tonghe Zhang", marks: "2†", href: "https://tonghe-zhang.github.io/" },
   { name: "Haotian Lin", marks: "2†", href: "https://darthutopian.github.io/" },
   { name: "Letian \"Max\" Fu", marks: "3", href: "https://max-fu.github.io/" },
