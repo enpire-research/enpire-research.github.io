@@ -1614,11 +1614,24 @@ textarea {
   font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 820px) {
+  /* Mobile: the 4-column composition (videos -> per-camera verdict -> AND ->
+     reward) doesn't survive a grid collapse, so make it a horizontal swipe
+     strip that preserves the left-to-right story, one panel per screen. */
   .ziptie-reward__stages {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    grid-template-columns: none;
     grid-template-rows: none;
+    flex-wrap: nowrap;
     gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .ziptie-reward__stages::-webkit-scrollbar {
+    display: none;
   }
 
   .ziptie-reward__row-labels {
@@ -1630,7 +1643,9 @@ textarea {
     grid-template-rows: auto auto;
     gap: 10px;
     margin: 0;
+    flex: 0 0 78%;
     min-width: 0;
+    scroll-snap-align: center;
   }
 
   .ziptie-reward__stages .ziptie-reward__stage > * {
@@ -2036,8 +2051,26 @@ textarea {
     grid-template-columns: 42px minmax(0, 1fr);
   }
 
+  /* Keep the 3 agents comparable by swiping between them instead of stacking. */
   .pusht-stage {
-    grid-template-columns: 1fr;
+    display: flex;
+    grid-template-columns: none;
+    flex-wrap: nowrap;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .pusht-stage::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pusht-stage > * {
+    flex: 0 0 82%;
+    min-width: 0;
+    scroll-snap-align: center;
   }
 
   .pusht-gallery-items {
@@ -4755,16 +4788,198 @@ textarea {
   align-items: center;
 }
 
+/* Mobile table-of-contents drawer (desktop hides it; ≤820px shows the trigger). */
+.mobile-outline {
+  display: none;
+}
+
+.mobile-outline__trigger {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.82);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.figure-page[data-theme="day"] .mobile-outline__trigger {
+  border-color: rgba(12, 12, 12, 0.12);
+  background: rgba(246, 246, 239, 0.92);
+  color: rgba(12, 12, 12, 0.9);
+  box-shadow: 0 8px 24px rgba(12, 12, 12, 0.14);
+}
+
+.mobile-outline__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: flex;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.mobile-outline__overlay[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-outline__panel {
+  display: flex;
+  width: min(82vw, 320px);
+  flex-direction: column;
+  background: var(--figure-black);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+}
+
+.mobile-outline__overlay[data-open="true"] .mobile-outline__panel {
+  transform: translateX(0);
+}
+
+.figure-page[data-theme="day"] .mobile-outline__panel {
+  background: var(--figure-cream);
+  border-left-color: rgba(12, 12, 12, 0.12);
+}
+
+.mobile-outline__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 18px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--font-heading);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mobile-outline__head button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.figure-page[data-theme="day"] .mobile-outline__head {
+  color: rgba(12, 12, 12, 0.9);
+  border-bottom-color: rgba(12, 12, 12, 0.1);
+}
+
+.mobile-outline__links {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0 24px;
+}
+
+.mobile-outline__links a {
+  padding: 11px 18px;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 16px;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.mobile-outline__links a[data-level="2"] {
+  padding-left: 34px;
+  font-size: 15px;
+}
+
+.mobile-outline__links a[data-level="3"] {
+  padding-left: 50px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mobile-outline__links a[aria-current="true"] {
+  color: rgba(255, 255, 255, 0.96);
+  box-shadow: inset 3px 0 0 var(--accent, #76d19a);
+}
+
+.figure-page[data-theme="day"] .mobile-outline__links a {
+  color: rgba(12, 12, 12, 0.62);
+}
+
+.figure-page[data-theme="day"] .mobile-outline__links a[data-level="3"] {
+  color: rgba(12, 12, 12, 0.5);
+}
+
+.figure-page[data-theme="day"] .mobile-outline__links a[aria-current="true"] {
+  color: rgba(12, 12, 12, 0.96);
+}
+
 @media (max-width: 820px) {
+  .mobile-outline {
+    display: block;
+  }
+
   .figure-nav {
     height: 76px;
     padding: 0 20px;
   }
 
+  /* Mobile hero: a short static block showing only the fleet teaser, sized to
+     the article content width (same margins as the text below). */
   .article-hero {
-    height: 620vh;
-    min-height: 620svh;
+    height: auto;
+    min-height: 0;
     padding: 0;
+    background: transparent;
+  }
+
+  .article-hero__sticky {
+    position: static;
+    height: auto;
+    max-width: min(965px, 100%);
+    margin: 0 auto;
+    /* Just enough top room to clear the floating toggle; the article body's own
+       top padding below gives the banner balanced breathing room (not flush). */
+    padding: 64px 20px 8px;
+    overflow: visible;
+  }
+
+  .article-hero video {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    border-radius: 6px;
+    object-fit: contain;
+  }
+
+  /* Drop the drone "previous" teaser on phones — fleet teaser only. */
+  .article-hero__video--previous {
+    display: none;
+  }
+
+  /* The compact mobile hero leads straight into the title + TOC, so the
+     "Scroll to explore" cue (meaningful on the desktop full-screen teaser) is
+     redundant here. */
+  .scroll-cue {
+    display: none;
   }
 
   .article-body {
@@ -4776,43 +4991,9 @@ textarea {
     gap: 30px;
   }
 
+  /* Replace the desktop sidebar with the mobile drawer (see .mobile-outline). */
   .article-outline {
-    position: static;
-    overflow-x: auto;
-    padding: 0 0 12px;
-    border-left: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-    transform: none;
-    scrollbar-width: none;
-  }
-
-  .article-outline::-webkit-scrollbar {
     display: none;
-  }
-
-  .article-outline nav {
-    display: flex;
-    gap: 18px;
-    min-width: max-content;
-  }
-
-  .article-outline a {
-    padding: 0;
-    white-space: nowrap;
-  }
-
-  .article-outline a[data-level="2"],
-  .article-outline a[data-level="3"] {
-    padding: 0;
-    font-size: 14px;
-  }
-
-  .article-outline a::before {
-    display: none;
-  }
-
-  .figure-page[data-theme="day"] .article-outline {
-    border-bottom-color: rgba(12, 12, 12, 0.14);
   }
 
   .article-shell {

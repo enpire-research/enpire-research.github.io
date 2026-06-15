@@ -1,6 +1,6 @@
 "use client";
 
-import { Maximize2, Moon, Pause, Play, RotateCcw, Sun } from "lucide-react";
+import { List, Maximize2, Moon, Pause, Play, RotateCcw, Sun, X } from "lucide-react";
 import Image from "next/image";
 import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -84,6 +84,7 @@ const outlineItems = [
   { href: "#fleet-scaling", label: "Fleet Scaling" },
   { href: "#simulation-evaluation", label: "Simulation Evaluation" },
   { href: "#limitations", label: "Limitations & Future Directions" },
+  { href: "#acknowledgements", label: "Acknowledgements" },
 ];
 
 const headingIds: Record<string, string> = {
@@ -96,6 +97,7 @@ const headingIds: Record<string, string> = {
   "Scaling Autoresearch on Robot Fleets": "fleet-scaling",
   "Evaluation in Simulation": "simulation-evaluation",
   "Limitations & Future Directions": "limitations",
+  Acknowledgements: "acknowledgements",
 };
 
 const subsectionIds: Record<string, string> = {
@@ -243,6 +245,11 @@ const article: ArticleBlock[] = [
   {
     type: "paragraph",
     text: "As fleet size increases, token usage grows faster than the ideal linear trend. MTU remains close to the linear projection up to four agents, but rises sharply at eight agents. The total token budget required to obtain a successful policy follows the same pattern, increasing much more rapidly than the corresponding reduction in wall-clock time. Larger fleets can reach success sooner, but require a disproportionately higher token budget.",
+  },
+  { type: "heading", text: "Acknowledgements" },
+  {
+    type: "paragraph",
+    text: "We are grateful to many colleagues whose help made this project possible. We thank Jason Liu, Tony Tao, Tairan He, Alex Lin, Jim Yang, Paul Zhou, and Abhi Maddukuri for insightful discussions and feedback; Yide Shentu, Bike Zhang, Angchen Xie, Dvij Kalaria, and Yuqi Xie for their support with the experiments; Lion Park, Matin Furutan, Jeremy Chimienti, Dannis Da, and Tri Cao for fleet operation; and Tri Cao for the demo shots. We also thank the NVIDIA GEAR Team and the CMU LeCAR Lab for their continuous support.",
   },
 ];
 
@@ -1181,6 +1188,64 @@ function ArticleOutline({ activeHref }: { activeHref: string }) {
   );
 }
 
+// Mobile-only nav: a floating "Contents" button opens a drawer with the full
+// nested outline (the desktop sidebar / mobile strip is hidden on phones).
+function MobileOutline({ activeHref }: { activeHref: string }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  return (
+    <div className="mobile-outline">
+      <button
+        aria-expanded={open}
+        aria-label="Open table of contents"
+        className="mobile-outline__trigger"
+        onClick={() => setOpen(true)}
+        type="button"
+      >
+        <List aria-hidden="true" size={16} strokeWidth={1.9} />
+        Contents
+      </button>
+
+      <div className="mobile-outline__overlay" data-open={open} role="presentation" onClick={() => setOpen(false)}>
+        <nav
+          aria-label="Table of contents"
+          className="mobile-outline__panel"
+          onClick={(event) => event.stopPropagation()}
+        >
+          <div className="mobile-outline__head">
+            <span>Contents</span>
+            <button aria-label="Close table of contents" onClick={() => setOpen(false)} type="button">
+              <X aria-hidden="true" size={18} strokeWidth={1.8} />
+            </button>
+          </div>
+          <div className="mobile-outline__links">
+            {outlineItems.map((item) => (
+              <a
+                aria-current={activeHref === item.href ? "true" : undefined}
+                data-level={item.level ?? 1}
+                href={item.href}
+                key={item.href}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </div>
+    </div>
+  );
+}
+
 function ArticleContent() {
   const [activeHref, setActiveHref] = useState(outlineItems[0].href);
   let figureNumber = 0;
@@ -1231,6 +1296,7 @@ function ArticleContent() {
     <section className="article-body" data-outline-open="true" id="article-content">
       <div className="article-layout">
         <ArticleOutline activeHref={activeHref} />
+        <MobileOutline activeHref={activeHref} />
         <article className="article-shell">
 	        <header className="article-title-block" id="article-title">
 	          <h1>
@@ -1404,6 +1470,19 @@ function ScrollFleetTeaser() {
   const previousTeaserRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
+    // Mobile: skip the scroll-driven scrub entirely and just loop the fleet
+    // teaser (the drone clip is hidden via CSS). The hero is a short static
+    // block on phones, so there's nothing to scrub.
+    if (window.matchMedia("(max-width: 820px)").matches) {
+      const fleet = fleetScrollRef.current;
+      if (fleet) {
+        fleet.loop = true;
+        fleet.style.opacity = "1";
+        void fleet.play().catch(() => undefined);
+      }
+      return;
+    }
+
     let frame = 0;
     let targetProgress = 0;
     let smoothProgress = 0;
