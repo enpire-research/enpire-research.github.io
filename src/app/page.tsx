@@ -667,41 +667,50 @@ function PinResetCasePanel() {
 
 function ZiptieResetCasePanel() {
   return (
-    <ResetVideoCasePanel
-      ariaLabel="Case 3 Tie Zip-tie auto reset"
-      code={{
-        file: ziptieResetCodeFile,
-        code: ziptieResetCode,
-        title: "Zip-tie auto-reset script",
-        subtitle: "Case 3: Tie Zip-tie · vision-guided tail grasp",
-      }}
-      initialStates={[
-        {
-          id: "ziptie-init-1",
-          label: "Random Init 1",
-          poster: "/images/ziptie-reset-1-frame.jpg",
-          video: "/videos/ziptie-reset-1.mp4",
-        },
-        {
-          id: "ziptie-init-2",
-          label: "Random Init 2",
-          poster: "/images/ziptie-reset-2-frame.jpg",
-          video: "/videos/ziptie-reset-2.mp4",
-        },
-        {
-          id: "ziptie-init-3",
-          label: "Random Init 3",
-          poster: "/images/ziptie-reset-3-frame.jpg",
-          video: "/videos/ziptie-reset-3.mp4",
-        },
-        {
-          id: "ziptie-init-4",
-          label: "Random Init 4",
-          poster: "/images/ziptie-reset-4-frame.jpg",
-          video: "/videos/ziptie-reset-4.mp4",
-        },
-      ]}
-    />
+    <section className="gpu-reset-section">
+      <aside className="gpu-reset-sidenote" aria-label="Zip-tie reset procedure">
+        <strong>Zip-tie reset</strong>
+        <ol>
+          <li>Pick up the zip-tie from anywhere on the table with one hand.</li>
+          <li>Use the other hand to grab and curl its tail, aligning the strap with the head.</li>
+        </ol>
+      </aside>
+      <ResetVideoCasePanel
+        ariaLabel="Case 3 Tie Zip-tie auto reset"
+        code={{
+          file: ziptieResetCodeFile,
+          code: ziptieResetCode,
+          title: "Zip-tie auto-reset script",
+          subtitle: "Case 3: Tie Zip-tie · vision-guided tail grasp",
+        }}
+        initialStates={[
+          {
+            id: "ziptie-init-1",
+            label: "Random Init 1",
+            poster: "/images/ziptie-reset-1-frame.jpg",
+            video: "/videos/ziptie-reset-1.mp4",
+          },
+          {
+            id: "ziptie-init-2",
+            label: "Random Init 2",
+            poster: "/images/ziptie-reset-2-frame.jpg",
+            video: "/videos/ziptie-reset-2.mp4",
+          },
+          {
+            id: "ziptie-init-3",
+            label: "Random Init 3",
+            poster: "/images/ziptie-reset-3-frame.jpg",
+            video: "/videos/ziptie-reset-3.mp4",
+          },
+          {
+            id: "ziptie-init-4",
+            label: "Random Init 4",
+            poster: "/images/ziptie-reset-4-frame.jpg",
+            video: "/videos/ziptie-reset-4.mp4",
+          },
+        ]}
+      />
+    </section>
   );
 }
 

@@ -1048,6 +1048,13 @@ textarea {
   color: rgba(12, 12, 12, 0.68);
 }
 
+/* Play + optional View Code sit together as the left transport cell. */
+.pusht-reset-case__transport {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .pusht-reset-case__play {
   height: 30px;
   min-width: 56px;

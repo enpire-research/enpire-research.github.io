@@ -148,9 +148,24 @@ export function ResetVideoCasePanel({
         </button>
       </div>
       <div className="pusht-reset-case__controls" aria-label={`${ariaLabel} controls`}>
-        <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
-          {isPlaying ? "Pause" : "Play"}
-        </button>
+        <div className="pusht-reset-case__transport">
+          <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          {code ? (
+            <button
+              aria-label="View the reset script code"
+              aria-pressed={isCodeOpen}
+              className="pusht-code-toggle ziptie-reward__code-toggle"
+              data-open={isCodeOpen}
+              onClick={() => setIsCodeOpen((open) => !open)}
+              type="button"
+            >
+              <span className="ziptie-reward__code-toggle-label">View Code</span>
+              <Code2 size={15} strokeWidth={1.8} />
+            </button>
+          ) : null}
+        </div>
         <div className="pusht-reset-case__progress-shell" style={{ "--pusht-reset-progress": progress } as CSSProperties}>
           <div className="pusht-reset-case__progress-rail" aria-hidden="true">
             <span className="pusht-reset-case__progress-fill" />
@@ -178,19 +193,6 @@ export function ResetVideoCasePanel({
           />
         </div>
         <span className="pusht-reset-case__percent">{percent}%</span>
-        {code ? (
-          <button
-            aria-label="View the reset script code"
-            aria-pressed={isCodeOpen}
-            className="pusht-code-toggle ziptie-reward__code-toggle"
-            data-open={isCodeOpen}
-            onClick={() => setIsCodeOpen((open) => !open)}
-            type="button"
-          >
-            <span className="ziptie-reward__code-toggle-label">View Code</span>
-            <Code2 size={15} strokeWidth={1.8} />
-          </button>
-        ) : null}
       </div>
       <div className="pusht-reset-case__gallery" aria-label={`${ariaLabel} initial positions`}>
         {initialStates.map((state) => (
