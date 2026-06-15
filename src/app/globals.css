@@ -1034,6 +1034,25 @@ textarea {
   color: rgba(12, 12, 12, 0.68);
 }
 
+.pusht-reset-case__transport {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Match the reset Play button (30px tall, bordered, square) rather than the
+   small rounded popover toggle the policy panel uses. */
+.pusht-reset-case__code-toggle {
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 0;
+  color: inherit;
+}
+.figure-page[data-theme="day"] .pusht-reset-case__code-toggle {
+  border-color: rgba(12, 12, 12, 0.22);
+}
+
 .pusht-reset-case__play {
   height: 30px;
   min-width: 56px;

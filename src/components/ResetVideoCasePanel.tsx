@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
 import ResetSwipeCarousel from "@/components/ResetSwipeCarousel";
 import { useIsMobile } from "@/lib/useIsMobile";
+import ResetCodePopover from "@/components/ResetCodePopover";
+import type { ResetCode } from "@/data/resetCode";
 
 type ResetInit = {
   id: string;
@@ -21,9 +23,11 @@ const playbackSpeeds = [2, 4, 8, 1] as const;
 export function ResetVideoCasePanel({
   ariaLabel,
   initialStates,
+  code,
 }: {
   ariaLabel: string;
   initialStates: ResetInit[];
+  code?: ResetCode;
 }) {
   const [selectedId, setSelectedId] = useState(initialStates[0]?.id ?? "");
   const [duration, setDuration] = useState(0);
@@ -135,9 +139,12 @@ export function ResetVideoCasePanel({
         </button>
       </div>
       <div className="pusht-reset-case__controls" aria-label={`${ariaLabel} controls`}>
-        <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
-          {isPlaying ? "Pause" : "Play"}
-        </button>
+        <div className="pusht-reset-case__transport">
+          <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          {code ? <ResetCodePopover {...code} /> : null}
+        </div>
         <div className="pusht-reset-case__progress-shell" style={{ "--pusht-reset-progress": progress } as CSSProperties}>
           <div className="pusht-reset-case__progress-rail" aria-hidden="true">
             <span className="pusht-reset-case__progress-fill" />

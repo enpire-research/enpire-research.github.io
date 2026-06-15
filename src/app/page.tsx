@@ -15,6 +15,7 @@ import PushTResetCasePanel from "@/components/PushTResetCasePanel";
 import { ResetVideoCasePanel } from "@/components/ResetVideoCasePanel";
 import { ZiptieRewardPanel } from "@/components/ZiptieRewardPanel";
 import PasscodeGate from "@/components/PasscodeGate";
+import { resetCode } from "@/data/resetCode";
 
 type ArticleBlock =
   | { type: "heading"; text: string }
@@ -166,6 +167,10 @@ const article: ArticleBlock[] = [
   },
   { type: "heading", text: "Learned Manipulation Policy" },
   { type: "learned-policy-panels" },
+  {
+    type: "paragraph",
+    text: "ENPIRE runs fully autonomously on real robots. Working only through the automated reset and verification interface, a team of coding agents proposes algorithmic hypotheses (heuristic learning, behavior cloning, offline and online RL), tests them against the real-world success rate, and keeps the changes that move it. The idea tree below traces that search: a hypothesis git-tree in which each branch is an idea an agent tried, shown over the same wall-clock-time axis as the success-rate curve it hill-climbs toward convergence.",
+  },
   { type: "idea-tree-embed" },
   { type: "heading", text: "ENPIRE System" },
   {
@@ -659,6 +664,7 @@ function PinResetCasePanel() {
           video: "/videos/pin-reset-only-4.mp4",
         },
       ]}
+      code={resetCode.pin}
     />
   );
 }

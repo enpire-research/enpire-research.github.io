@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import ExpandableVideoViewer from "@/components/ExpandableVideoViewer";
 import ResetSwipeCarousel from "@/components/ResetSwipeCarousel";
 import { useIsMobile } from "@/lib/useIsMobile";
+import ResetCodePopover from "@/components/ResetCodePopover";
+import { resetCode } from "@/data/resetCode";
 
 const initialStates = [
   {
@@ -190,9 +192,12 @@ export default function PushTResetCasePanel() {
         </button>
       </div>
       <div className="pusht-reset-case__controls" aria-label="Push T reset video controls">
-        <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
-          {isPlaying ? "Pause" : "Play"}
-        </button>
+        <div className="pusht-reset-case__transport">
+          <button className="pusht-reset-case__play" onClick={handleTogglePlayback} type="button">
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          <ResetCodePopover {...resetCode.pusht} />
+        </div>
         <div className="pusht-reset-case__progress-shell" style={{ "--pusht-reset-progress": progress } as CSSProperties}>
           <div className="pusht-reset-case__progress-rail" aria-hidden="true">
             <span className="pusht-reset-case__progress-fill" />
