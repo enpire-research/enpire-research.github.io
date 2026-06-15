@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "next-dev",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "export PATH=\"/opt/homebrew/bin:$PATH\"; exec node node_modules/next/dist/bin/next dev"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "next-start",
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "export PATH=\"/opt/homebrew/bin:$PATH\"; exec node node_modules/next/dist/bin/next start"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}

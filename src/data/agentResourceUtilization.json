@@ -1,0 +1,62 @@
+{
+  "utilization": [
+    {
+      "agentCount": 1,
+      "robotMean": 49.14,
+      "robotStd": 24.93,
+      "gpuMean": 29.41,
+      "gpuStd": 11.43
+    },
+    {
+      "agentCount": 4,
+      "robotMean": 30.87,
+      "gpuMean": 32.52,
+      "robotStd": 10.86,
+      "gpuStd": 12.86
+    },
+    {
+      "agentCount": 8,
+      "robotMean": 29.78,
+      "gpuMean": 48.96,
+      "robotStd": 9.48,
+      "gpuStd": 30.15
+    }
+  ],
+  "tokenRate": [
+    {
+      "agentCount": 1,
+      "mean": 9269.21,
+      "std": 2648.62
+    },
+    {
+      "agentCount": 4,
+      "mean": 40028.72,
+      "std": 29441.58
+    },
+    {
+      "agentCount": 8,
+      "mean": 140310.43,
+      "std": 14912.40
+    }
+  ],
+  "tokensToSuccess": [
+    {
+      "agentCount": 1,
+      "meanTokens": 2.50,
+      "stdTokens": 0.72,
+      "successHours": 4.5
+    },
+    {
+      "agentCount": 4,
+      "meanTokens": 7.69,
+      "stdTokens": 5.65,
+      "successHours": 3.2
+    },
+    {
+      "agentCount": 8,
+      "meanTokens": 16.84,
+      "stdTokens": 1.79,
+      "successHours": 2.0
+    }
+  ]
+}
