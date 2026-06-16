@@ -671,7 +671,7 @@ function ZiptieResetCasePanel() {
       <aside className="gpu-reset-sidenote" aria-label="Zip-tie reset procedure">
         <strong>Zip-tie reset</strong>
         <ol>
-          <li>Pick up the zip-tie from anywhere on the table with one hand.</li>
+          <li>Grasp the zip-tie's head from anywhere on the table with one hand.</li>
           <li>Use the other hand to grab and curl its tail, aligning the strap with the head.</li>
         </ol>
       </aside>
@@ -681,7 +681,7 @@ function ZiptieResetCasePanel() {
           file: ziptieResetCodeFile,
           code: ziptieResetCode,
           title: "Zip-tie auto-reset script",
-          subtitle: "Case 3: Tie Zip-tie · vision-guided tail grasp",
+          subtitle: "Case 3: Tie Zip-tie",
         }}
         initialStates={[
           {
@@ -730,7 +730,7 @@ function GpuResetCasePanel() {
           file: gpuResetCodeFile,
           code: gpuResetCode,
           title: "GPU auto-reset script",
-          subtitle: "Case 4: GPU Insertion · single-arm unplug",
+          subtitle: "Case 4: GPU Insertion",
         }}
         initialStates={[
           {

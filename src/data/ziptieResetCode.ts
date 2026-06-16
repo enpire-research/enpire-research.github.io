@@ -1,7 +1,7 @@
-// Simplified from the autoresearch ziptie/reset/flat.py. The original hardcoded
+// Simplified from the autoresearch ziptie/reset.py. The original hardcoded
 // every freespace waypoint; here the OTHER arm instead localizes the strap tail
 // by vision (wrist-camera mask deprojected to world) so the grasp isn't baked in.
-export const ziptieResetCodeFile = "ziptie/reset/flat.py";
+export const ziptieResetCodeFile = "ziptie/reset.py";
 
 export const ziptieResetCode = `"""Zip-tie auto-reset: two arms re-stage the strap for the next trial.
 
